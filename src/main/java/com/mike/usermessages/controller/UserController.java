@@ -1,33 +1,34 @@
 package com.mike.usermessages.controller;
 
-import lombok.RequiredArgsConstructor;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-//@RestController
-//@RequiredArgsConstructor
-//@RequestMapping("/")
-//public class UserController {
+@RestController
+@RequestMapping("/")
+public class UserController {
 
+    @PostMapping("register")
+    @Operation(summary = "Registration of new user")
+    public ResponseEntity<String> userRegistration() {
 
-//    @GetMapping
-//    public String Test() {
-//        return "Test output";
-//    }
-//
-//    @PostMapping("register")
-//    public ResponseEntity<String> userRegistry() {
-//
-//        return new ResponseEntity<>("Test", HttpStatus.ACCEPTED);
-//    }
+        return new ResponseEntity<>("User was registered successfully.", HttpStatus.OK);
+    }
 
-//    @GetMapping("test")
-//    public ResponseEntity<String> testGet() {
-//        return ResponseEntity.ok("From testGet");
-//    }
-//}
+    @PostMapping("login")
+    @Operation(summary = "Login user")
+    public ResponseEntity<String> userLogin() {
+
+        return new ResponseEntity<>("User was logout successfully.", HttpStatus.OK);
+    }
+
+    @PostMapping("logout")
+    @Operation(summary = "Logout user")
+    public ResponseEntity<String> userLogout() {
+
+        return new ResponseEntity<>("User was logout successfully.", HttpStatus.OK);
+    }
+}

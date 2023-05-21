@@ -1,7 +1,5 @@
 package com.mike.usermessages.model;
 
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -108,7 +106,10 @@ public class Usr {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usr usr = (Usr) o;
-        return Objects.equals(id, usr.id) && Objects.equals(firstName, usr.firstName) && Objects.equals(middleName, usr.middleName) && Objects.equals(lastName, usr.lastName) && Objects.equals(email, usr.email) && Objects.equals(login, usr.login) && Objects.equals(password, usr.password) && Objects.equals(message, usr.message) && Objects.equals(createTime, usr.createTime) && Objects.equals(editTime, usr.editTime);
+        return Objects.equals(id, usr.id) && Objects.equals(firstName, usr.firstName) && Objects.equals(middleName,
+                usr.middleName) && Objects.equals(lastName, usr.lastName) && Objects.equals(email, usr.email) &&
+                Objects.equals(login, usr.login) && Objects.equals(password, usr.password) && Objects.equals(message,
+                usr.message) && Objects.equals(createTime, usr.createTime) && Objects.equals(editTime, usr.editTime);
     }
 
     @Override

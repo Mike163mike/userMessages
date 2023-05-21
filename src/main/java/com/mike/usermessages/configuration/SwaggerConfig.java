@@ -18,7 +18,7 @@ public class SwaggerConfig {
                         .contact(
                                 new Contact()
                                         .email("mick_mick_mick@icloud.com")
-                                        //.url("https://uPagge.ru")
+                                        //.url("https:  ")
                                         .name("Mike")));
     }
 
