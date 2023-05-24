@@ -1,25 +1,30 @@
 package com.mike.usermessages.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.mike.usermessages.model.enums.Role;
+import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
+@Table(name = "usrs")
 public class Usr {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName;
     private String middleName;
     private String lastName;
     private String email;
-    private String login;
     private String password;
-    private Integer message;
-    private Instant createTime;
-    private Instant editTime;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private List<Message> messages;
+    private Instant createTime = Instant.now();
+    private Instant editTime = Instant.now();
 
     public Integer getId() {
         return id;
@@ -61,14 +66,6 @@ public class Usr {
         this.email = email;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -77,12 +74,12 @@ public class Usr {
         this.password = password;
     }
 
-    public Integer getMessage() {
-        return message;
+    public List<Message> getMessages() {
+        return messages;
     }
 
-    public void setMessage(Integer message) {
-        this.message = message;
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 
     public Instant getCreateTime() {
@@ -101,19 +98,11 @@ public class Usr {
         this.editTime = editTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Usr usr = (Usr) o;
-        return Objects.equals(id, usr.id) && Objects.equals(firstName, usr.firstName) && Objects.equals(middleName,
-                usr.middleName) && Objects.equals(lastName, usr.lastName) && Objects.equals(email, usr.email) &&
-                Objects.equals(login, usr.login) && Objects.equals(password, usr.password) && Objects.equals(message,
-                usr.message) && Objects.equals(createTime, usr.createTime) && Objects.equals(editTime, usr.editTime);
+    public Role getRole() {
+        return role;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, middleName, lastName, email, login, password, message, createTime, editTime);
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

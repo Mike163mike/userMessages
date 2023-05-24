@@ -46,6 +46,11 @@ public class MessageController {
     @GetMapping("/{task_id}")
     @Operation(summary = "Get message by id")
     public ResponseEntity<MessageResponseDto> getMessageById(@PathVariable Integer task_id) {
+        try {
+            messageService.findById(task_id);
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("Not found message with id = " + task_id + ".");
+        }
         MessageResponseDto messageResponseDto = messageResponseMapper.map(messageService.findById(task_id));
         return ResponseEntity.ok(messageResponseDto);
     }

@@ -2,7 +2,6 @@ package com.mike.usermessages.service.dto;
 
 import java.time.Instant;
 
-
 public class MessageResponseDto {
 
     private Integer id;

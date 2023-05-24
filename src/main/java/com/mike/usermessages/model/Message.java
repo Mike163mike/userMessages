@@ -1,14 +1,11 @@
 package com.mike.usermessages.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.Objects;
 
 @Entity
+@Table(name = "messages")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,20 +53,5 @@ public class Message {
 
     public void setEditTime(Instant editTime) {
         this.editTime = editTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Message message1 = (Message) o;
-        return Objects.equals(id, message1.id) && Objects.equals(message, message1.message) && Objects.equals(user_id,
-                message1.user_id) && Objects.equals(createTime, message1.createTime) && Objects.equals(editTime,
-                message1.editTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, message, user_id, createTime, editTime);
     }
 }
