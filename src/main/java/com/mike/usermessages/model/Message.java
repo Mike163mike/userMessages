@@ -1,6 +1,7 @@
 package com.mike.usermessages.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.Instant;
 
@@ -11,9 +12,11 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String message;
+    private Instant createTime;
+    private Instant editTime;
+//    @ManyToOne
+    @NotNull
     private Integer user_id;
-    private Instant createTime = Instant.now();
-    private Instant editTime = Instant.now();
 
     public Integer getId() {
         return id;
@@ -31,14 +34,6 @@ public class Message {
         this.message = message;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
     public Instant getCreateTime() {
         return createTime;
     }
@@ -53,5 +48,13 @@ public class Message {
 
     public void setEditTime(Instant editTime) {
         this.editTime = editTime;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 }

@@ -1,30 +1,22 @@
-package com.mike.usermessages.model;
+package com.mike.usermessages.service.dto;
 
-import com.mike.usermessages.model.enums.Role;
-import jakarta.persistence.*;
+import com.mike.usermessages.model.Message;
+import com.mike.usermessages.model.Role;
 
 import java.time.Instant;
 import java.util.List;
 
-@Entity
-@Table(name = "usrs")
-public class Usr {
+public class UserResponseDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName;
     private String middleName;
     private String lastName;
     private String email;
-    private String password;
-    @Enumerated(EnumType.STRING)
-    private Role role;
-    @OneToMany
-    @JoinColumn(name = "user_id")
+    private List<Role> roles;
     private List<Message> messages;
-    private Instant createTime = Instant.now();
-    private Instant editTime = Instant.now();
+    private Instant createTime;
+    private Instant editTime;
 
     public Integer getId() {
         return id;
@@ -66,12 +58,12 @@ public class Usr {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public List<Message> getMessages() {
@@ -96,13 +88,5 @@ public class Usr {
 
     public void setEditTime(Instant editTime) {
         this.editTime = editTime;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }

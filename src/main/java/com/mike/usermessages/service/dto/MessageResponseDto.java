@@ -6,9 +6,9 @@ public class MessageResponseDto {
 
     private Integer id;
     private String message;
-    private Integer user_id;
     private Instant createTime;
     private Instant editTime;
+    private Integer user_id;
 
     public Integer getId() {
         return id;
@@ -26,14 +26,6 @@ public class MessageResponseDto {
         this.message = message;
     }
 
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
-    }
-
     public Instant getCreateTime() {
         return createTime;
     }
@@ -48,5 +40,13 @@ public class MessageResponseDto {
 
     public void setEditTime(Instant editTime) {
         this.editTime = editTime;
+    }
+
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 }

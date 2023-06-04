@@ -1,5 +1,6 @@
 package com.mike.usermessages.controller;
 
+import com.mike.usermessages.model.Message;
 import com.mike.usermessages.service.MessageService;
 import com.mike.usermessages.service.dto.MessageRequestDto;
 import com.mike.usermessages.service.dto.MessageResponseDto;
@@ -10,11 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
+
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/message")
 public class MessageController {
 
     private final MessageService messageService;
@@ -31,53 +33,62 @@ public class MessageController {
     @PostMapping
     @Operation(summary = "Create new message")
     public ResponseEntity<MessageResponseDto> createMessage(@RequestBody MessageRequestDto messageRequestDto) {
-        MessageResponseDto newMessageResponseDto = messageResponseMapper.map(messageService.saveMessage(messageRequestMapper
+        MessageResponseDto newMessageResponseDto = messageResponseMapper.map(messageService
+                .saveMessage(messageRequestMapper
                 .map(messageRequestDto)));
         return ResponseEntity.ok(newMessageResponseDto);
     }
 
     @GetMapping
     @Operation(summary = "Get all messages")
-    public ResponseEntity<Set<MessageResponseDto>> getAllMessages() {
-        Set<MessageResponseDto> messageResponseDtos = messageResponseMapper.toSet(messageService.getAllMessages());
+    public ResponseEntity<List<MessageResponseDto>> getAllMessages() {
+        List<MessageResponseDto> messageResponseDtos = messageResponseMapper
+                .toList(messageService.getAllMessages());
         return ResponseEntity.ok(messageResponseDtos);
     }
 
-    @GetMapping("/{task_id}")
+    @GetMapping("/{message_id}")
     @Operation(summary = "Get message by id")
-    public ResponseEntity<MessageResponseDto> getMessageById(@PathVariable Integer task_id) {
+    public ResponseEntity<MessageResponseDto> getMessageById(@PathVariable Integer message_id) {
         try {
-            messageService.findById(task_id);
+            messageService.findById(message_id);
         } catch (NoSuchElementException e) {
-            throw new NoSuchElementException("Not found message with id = " + task_id + ".");
+            throw new NoSuchElementException("Not found message with id = " + message_id + ".");
         }
-        MessageResponseDto messageResponseDto = messageResponseMapper.map(messageService.findById(task_id));
+        MessageResponseDto messageResponseDto = messageResponseMapper.map(messageService.findById(message_id));
         return ResponseEntity.ok(messageResponseDto);
     }
 
-    @PutMapping("/{task_id}")
+    @PutMapping("/{message_id}")
     @Operation(summary = "Edit message")
-    public ResponseEntity<MessageResponseDto> editMessageById(@PathVariable Integer task_id,
+    public ResponseEntity<MessageResponseDto> editMessageById(@PathVariable Integer message_id,
                                                               @RequestBody String message) {
         try {
-            messageService.findById(task_id);
+            messageService.findById(message_id);
         } catch (NoSuchElementException e) {
-            throw new NoSuchElementException("Not found message with id = " + task_id + ".");
+            throw new NoSuchElementException("Not found message with id = " + message_id + ".");
         }
         MessageResponseDto messageResponseDto = messageResponseMapper.map(
-                messageService.editMessageById(task_id, message));
+                messageService.editMessageById(message_id, message));
         return ResponseEntity.ok(messageResponseDto);
     }
 
-    @DeleteMapping("/{task_id}")
+    @DeleteMapping("/{message_id}")
     @Operation(summary = "Delete message by id")
-    public ResponseEntity<String> deleteMessageById(@PathVariable Integer task_id) {
+    public ResponseEntity<String> deleteMessageById(@PathVariable Integer message_id) {
         try {
-            messageService.findById(task_id);
+            messageService.findById(message_id);
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<>("Not found message with id = " + task_id + ".", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Not found message with id = " + message_id + ".", HttpStatus.NOT_FOUND);
         }
-        messageService.deleteMessageById(task_id);
-        return ResponseEntity.ok("The message with id = " + task_id + " was deleted successfully.");
+        messageService.deleteMessageById(message_id);
+        return ResponseEntity.ok("The message with id = " + message_id + " was deleted successfully.");
+    }
+
+    @GetMapping("/test_1")
+    public ResponseEntity<MessageResponseDto> test_method() {
+        Message message = messageService.findById(1);
+        MessageResponseDto dto = messageResponseMapper.map(message);
+        return ResponseEntity.ok(dto);
     }
 }

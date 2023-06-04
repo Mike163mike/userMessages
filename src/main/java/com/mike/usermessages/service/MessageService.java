@@ -5,8 +5,7 @@ import com.mike.usermessages.repository.MessageRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class MessageService {
@@ -18,11 +17,13 @@ public class MessageService {
     }
 
     public Message saveMessage(Message message) {
+        message.setCreateTime(Instant.now());
+        message.setEditTime(Instant.now());
         return messageRepository.save(message);
     }
 
-    public Set<Message> getAllMessages() {
-        return new HashSet<>(messageRepository.findAll());
+    public List<Message> getAllMessages() {
+        return messageRepository.findAll();
     }
 
     public Message findById(Integer id) {

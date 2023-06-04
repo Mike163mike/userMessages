@@ -4,7 +4,7 @@ import com.mike.usermessages.model.Message;
 import com.mike.usermessages.service.dto.MessageResponseDto;
 import org.mapstruct.Mapper;
 
-import java.util.Set;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -14,9 +14,9 @@ public interface MessageResponseMapper {
 
     Message map(MessageResponseDto messageResponseDto);
 
-    default Set<MessageResponseDto> toSet(Set<Message> messageSet) {
-        return messageSet.stream()
+    default List<MessageResponseDto> toList(List<Message> messages) {
+        return messages.stream()
                 .map(this::map)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 }
