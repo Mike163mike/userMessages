@@ -1,5 +1,6 @@
 package com.mike.usermessages.configuration;
 
+import com.mike.usermessages.security.JwtRequestFilter;
 import com.mike.usermessages.service.SecurityUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableMethodSecurity
@@ -21,9 +23,11 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 //@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
+    private final JwtRequestFilter jwtRequestFilter;
     private final SecurityUserService securityUserService;
 
-    public SecurityConfig(SecurityUserService securityUserService) {
+    public SecurityConfig(JwtRequestFilter jwtRequestFilter, SecurityUserService securityUserService) {
+        this.jwtRequestFilter = jwtRequestFilter;
         this.securityUserService = securityUserService;
     }
 
@@ -32,20 +36,18 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .cors().disable()
-                .authorizeHttpRequests((authorizeHttpRequests) ->
-                        authorizeHttpRequests
-                                .requestMatchers( "/**").permitAll()
-  //                              .requestMatchers("/test/**").authenticated()
-//                                .requestMatchers("/message/**").hasAnyRole("USER", "ADMIN")
-//                                .requestMatchers("/user/**").hasRole("ADMIN")
-  //                              .anyRequest().permitAll())
-                )
-
+                .authorizeHttpRequests()
+                .requestMatchers("/test/**").authenticated()
+                .requestMatchers("/message/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/user/**").hasRole("ADMIN")
+                .anyRequest().permitAll()
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-                //.and().addFilterBefore()
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .and()
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 //                .and()
 //                .formLogin(withDefaults())
 //                .logout((logout) ->
