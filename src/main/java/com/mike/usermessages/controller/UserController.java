@@ -7,7 +7,7 @@ import com.mike.usermessages.service.UserService;
 import com.mike.usermessages.service.dto.UserResponseDto;
 import com.mike.usermessages.service.mapper.RoleMapper;
 import com.mike.usermessages.service.mapper.UserRegRequestMapper;
-import com.mike.usermessages.service.mapper.UserRequestMapper;
+import com.mike.usermessages.service.mapper.JwtRequestMapper;
 import com.mike.usermessages.service.mapper.UserResponseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -27,12 +27,12 @@ public class UserController {
     private final RoleService roleService;
     private final UserService userService;
     private final UserRegRequestMapper userRegRequestMapper;
-    private final UserRequestMapper userRequestMapper;
+    private final JwtRequestMapper userRequestMapper;
     private final UserResponseMapper userResponseMapper;
     private final RoleMapper roleMapper;
 
     public UserController(RoleService roleService, UserService userService, UserRegRequestMapper userRegRequestMapper,
-                          UserRequestMapper userRequestMapper, UserResponseMapper userResponseMapper,
+                          JwtRequestMapper userRequestMapper, UserResponseMapper userResponseMapper,
                           RoleMapper roleMapper) {
         this.roleService = roleService;
         this.userService = userService;
@@ -59,7 +59,7 @@ public class UserController {
     // @PreAuthorize(value = "hasAnyRole('USER')")
     @SecurityRequirement(name = "Basic_type")
     public ResponseEntity<UserResponseDto> userEdit(@PathVariable Integer user_id, @RequestBody List<String> roles) {
-        User user = userService.getuserById(user_id);
+        User user = userService.getUserById(user_id);
         List<String> newRoles = new ArrayList<>();
         List<String> constRoles = roleService.getAllRoles().stream()
                 .map(Role::getName)
@@ -113,6 +113,6 @@ public class UserController {
 
     @GetMapping("/{user_id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable Integer user_id) {
-        return ResponseEntity.ok(userResponseMapper.map(userService.getuserById(user_id)));
+        return ResponseEntity.ok(userResponseMapper.map(userService.getUserById(user_id)));
     }
 }

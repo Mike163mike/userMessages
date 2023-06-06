@@ -1,3 +1,7 @@
+jwt:
+  secret: dfsdfsd9fsdifosid6f8sflsi
+  lifetime: 30m
+
 spring:
   datasource:
       driver-class-name: org.postgresql.Driver

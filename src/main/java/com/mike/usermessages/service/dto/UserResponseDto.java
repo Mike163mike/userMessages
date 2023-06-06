@@ -12,6 +12,7 @@ public class UserResponseDto {
     private String firstName;
     private String middleName;
     private String lastName;
+    private String username;
     private String email;
     private List<Role> roles;
     private List<Message> messages;
@@ -88,5 +89,13 @@ public class UserResponseDto {
 
     public void setEditTime(Instant editTime) {
         this.editTime = editTime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

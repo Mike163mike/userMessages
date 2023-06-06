@@ -26,7 +26,7 @@ public class UserService {
         this.repository = repository;
     }
 
-    public void saveUser(User user) {
+    public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setCreateTime(Instant.now());
         user.setEditTime(Instant.now());
@@ -61,12 +61,13 @@ public class UserService {
     }
 
 
-    public User getuserById(Integer id) {
+    public User getUserById(Integer id) {
         return userRepository.findById(id).orElseThrow();
     }
+
     @Transactional
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User getUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 
     public List<Role> mapStringToRole(List<String> strings) {

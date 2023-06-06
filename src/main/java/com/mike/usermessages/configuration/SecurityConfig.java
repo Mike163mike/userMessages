@@ -3,17 +3,22 @@ package com.mike.usermessages.configuration;
 import com.mike.usermessages.service.SecurityUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 @Configuration
 @EnableMethodSecurity
+//@Configuration
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
     private final SecurityUserService securityUserService;
@@ -25,16 +30,27 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
+                .cors().disable()
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
-//                                .requestMatchers("/**").permitAll()
-                                .requestMatchers("/test/**").hasAnyRole("ADMIN", "USER")
-                                .requestMatchers("/message/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/user/**").hasRole("ADMIN"))
-                .formLogin(withDefaults())
-                .logout((logout) ->
-                        logout
-                                .logoutSuccessUrl("/login"));
+                                .requestMatchers( "/**").permitAll()
+  //                              .requestMatchers("/test/**").authenticated()
+//                                .requestMatchers("/message/**").hasAnyRole("USER", "ADMIN")
+//                                .requestMatchers("/user/**").hasRole("ADMIN")
+  //                              .anyRequest().permitAll())
+                )
+
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+                //.and().addFilterBefore()
+//                .and()
+//                .formLogin(withDefaults())
+//                .logout((logout) ->
+//                        logout
+//                                .logoutSuccessUrl("/login"));
 
         return http.build();
 
@@ -78,8 +94,16 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
+
     @Bean
-    public static PasswordEncoder passwordEncoder() {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
         // return PasswordEncoderFactories.createDelegatingPasswordEncoder();
         return new BCryptPasswordEncoder();
     }

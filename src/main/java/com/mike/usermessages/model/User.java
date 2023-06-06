@@ -16,6 +16,7 @@ public class User {
     private String firstName;
     private String middleName;
     private String lastName;
+    private String username;
     @Column(unique = true)
     private String email;
     private String password;
@@ -119,5 +120,13 @@ public class User {
 
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
