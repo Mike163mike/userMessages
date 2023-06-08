@@ -1,12 +1,13 @@
 package com.mike.usermessages.controller;
 
-import com.mike.usermessages.model.Message;
 import com.mike.usermessages.service.MessageService;
 import com.mike.usermessages.service.dto.MessageRequestDto;
 import com.mike.usermessages.service.dto.MessageResponseDto;
 import com.mike.usermessages.service.mapper.MessageRequestMapper;
 import com.mike.usermessages.service.mapper.MessageResponseMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-
-@RestController
 @RequestMapping("/message")
+@RestController
+@SecurityRequirement(name = "Bearer Authentication")
+@Tag(name = "Messages", description = "The Message API. Contains operations with " +
+        "messages.")
 public class MessageController {
 
     private final MessageService messageService;
@@ -30,17 +33,18 @@ public class MessageController {
         this.messageRequestMapper = messageRequestMapper;
     }
 
-    @PostMapping
     @Operation(summary = "Create new message")
+    @PostMapping
     public ResponseEntity<MessageResponseDto> createMessage(@RequestBody MessageRequestDto messageRequestDto) {
         MessageResponseDto newMessageResponseDto = messageResponseMapper.map(messageService
                 .saveMessage(messageRequestMapper
-                .map(messageRequestDto)));
+                        .map(messageRequestDto)));
         return ResponseEntity.ok(newMessageResponseDto);
     }
 
+    @Operation(summary = "Get all messages", description = "get all messages from all " +
+            "users.")
     @GetMapping
-    @Operation(summary = "Get all messages")
     public ResponseEntity<List<MessageResponseDto>> getAllMessages() {
         List<MessageResponseDto> messageResponseDtos = messageResponseMapper
                 .toList(messageService.getAllMessages());
@@ -83,12 +87,5 @@ public class MessageController {
         }
         messageService.deleteMessageById(message_id);
         return ResponseEntity.ok("The message with id = " + message_id + " was deleted successfully.");
-    }
-
-    @GetMapping("/test_1")
-    public ResponseEntity<MessageResponseDto> test_method() {
-        Message message = messageService.findById(1);
-        MessageResponseDto dto = messageResponseMapper.map(message);
-        return ResponseEntity.ok(dto);
     }
 }

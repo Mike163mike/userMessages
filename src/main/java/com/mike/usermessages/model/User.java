@@ -20,7 +20,8 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,
+    cascade = CascadeType.ALL)
     @JsonIgnore
 //    @JoinTable(name = "users_roles",
 //            joinColumns = @JoinColumn(name = "users_id"),

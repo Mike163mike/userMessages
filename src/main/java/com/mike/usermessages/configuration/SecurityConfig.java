@@ -53,9 +53,7 @@ public class SecurityConfig {
 //                .logout((logout) ->
 //                        logout
 //                                .logoutSuccessUrl("/login"));
-
         return http.build();
-
     }
 
 // Users saved In memory case
@@ -96,13 +94,11 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
