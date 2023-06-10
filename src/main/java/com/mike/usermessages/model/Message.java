@@ -1,7 +1,6 @@
 package com.mike.usermessages.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.Instant;
 
@@ -14,8 +13,8 @@ public class Message {
     private String message;
     private Instant createTime;
     private Instant editTime;
-//    @ManyToOne
-    @NotNull
+   // @ManyToOne
+  //  @NotNull
     private Integer user_id;
 
     public Integer getId() {

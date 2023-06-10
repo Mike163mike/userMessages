@@ -43,6 +43,18 @@ public class AuthService {
         return ResponseEntity.ok(new JwtResponseDto(token));
     }
 
+    public ResponseEntity<?> createAuthToken(String username, String password) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (BadCredentialsException e) {
+            return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(),
+                    "Incorrect login or password."), HttpStatus.UNAUTHORIZED);
+        }
+        UserDetails userDetails = securityUserService.loadUserByUsername(username);
+        String token = jwtTokenUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new JwtResponseDto(token));
+    }
+
     public ResponseEntity<?> createUser(UserRegRequestDto userRegRequestDto) {
         if (userService.getUserByUsername(userRegRequestDto.getUsername()) != null) {
             return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "User with this " +

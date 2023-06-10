@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/test/**").authenticated()
+               // .requestMatchers("/test/**").authenticated()
                 .requestMatchers("/message/**").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/user/**").hasRole("ADMIN")
                 .anyRequest().permitAll()

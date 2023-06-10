@@ -60,6 +60,11 @@ public class UserService {
         return userRepository.findUserByUsername(username);
     }
 
+    @Transactional
+    public Integer deleteUser(String username) {
+       return userRepository.deleteUserByUsername(username);
+    }
+
     public List<Role> mapStringToRole(List<String> strings) {
         List<Role> roles = new ArrayList<>();
         for (String tempStr : strings) {

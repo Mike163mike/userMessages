@@ -4,9 +4,6 @@ public class JwtResponseDto {
 
     private String token;
 
-    public JwtResponseDto() {
-    }
-
     public JwtResponseDto(String token) {
         this.token = token;
     }

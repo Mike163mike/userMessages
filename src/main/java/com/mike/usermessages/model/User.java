@@ -1,6 +1,5 @@
 package com.mike.usermessages.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.Instant;
@@ -20,15 +19,15 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER,
-    cascade = CascadeType.ALL)
-    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //@JsonIgnore
 //    @JoinTable(name = "users_roles",
 //            joinColumns = @JoinColumn(name = "users_id"),
 //            inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private List<Role> roles;
-    @OneToMany(mappedBy = "user_id")
-    //@JoinColumn(name = "user_id")
+    @OneToMany(/*mappedBy = "user",*/
+            fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private List<Message> messages;
 
     private boolean enable;
