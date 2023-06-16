@@ -4,6 +4,7 @@ import com.mike.usermessages.model.Role;
 import com.mike.usermessages.model.User;
 import com.mike.usermessages.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,13 +16,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class SecurityUserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public SecurityUserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     @Transactional

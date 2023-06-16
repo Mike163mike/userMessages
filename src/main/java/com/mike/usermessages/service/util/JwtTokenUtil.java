@@ -3,6 +3,8 @@ package com.mike.usermessages.service.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
+@Getter
+@Setter
 public class JwtTokenUtil {
 
     @Value("${jwt.secret}")
@@ -28,22 +32,6 @@ public class JwtTokenUtil {
 
     public JwtTokenUtil(String secret, Duration jwtLifetime) {
         this.secret = secret;
-        this.jwtLifetime = jwtLifetime;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
-    public Duration getJwtLifetime() {
-        return jwtLifetime;
-    }
-
-    public void setJwtLifetime(Duration jwtLifetime) {
         this.jwtLifetime = jwtLifetime;
     }
 

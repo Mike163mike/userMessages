@@ -24,10 +24,12 @@ class UserMessagesApplicationTests {
     @Test
     void contextLoadsMessage() {
         assertThat(messageController).isNotNull();
-    } @Test
+    }
+    @Test
     void contextLoadsUser() {
         assertThat(userController).isNotNull();
-    } @Test
+    }
+    @Test
     void contextLoadsAuth() {
         assertThat(authController).isNotNull();
     }

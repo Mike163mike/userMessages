@@ -2,19 +2,17 @@ package com.mike.usermessages.service;
 
 import com.mike.usermessages.model.Message;
 import com.mike.usermessages.repository.MessageRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class MessageService {
 
     private final MessageRepository messageRepository;
-
-    public MessageService(MessageRepository messageRepository) {
-        this.messageRepository = messageRepository;
-    }
 
     public Message saveMessage(Message message) {
         message.setCreateTime(Instant.now());

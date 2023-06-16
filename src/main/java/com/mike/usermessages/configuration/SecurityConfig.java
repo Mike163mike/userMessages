@@ -2,6 +2,7 @@ package com.mike.usermessages.configuration;
 
 import com.mike.usermessages.security.JwtRequestFilter;
 import com.mike.usermessages.service.SecurityUserService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -18,18 +19,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableMethodSecurity
-//@Configuration
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(securedEnabled = true)
+@AllArgsConstructor
 public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
     private final SecurityUserService securityUserService;
-
-    public SecurityConfig(JwtRequestFilter jwtRequestFilter, SecurityUserService securityUserService) {
-        this.jwtRequestFilter = jwtRequestFilter;
-        this.securityUserService = securityUserService;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,7 +31,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeHttpRequests()
-               // .requestMatchers("/test/**").authenticated()
+                // .requestMatchers("/test/**").authenticated()
                 .requestMatchers("/message/**").hasAnyRole("USER", "ADMIN")
                 .requestMatchers("/user/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
@@ -48,43 +42,8 @@ public class SecurityConfig {
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 .and()
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-//                .and()
-//                .formLogin(withDefaults())
-//                .logout((logout) ->
-//                        logout
-//                                .logoutSuccessUrl("/login"));
         return http.build();
     }
-
-// Users saved In memory case
-//    @Bean
-//    public
-//    UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.builder()
-//                        .username("user")
-//                        .password("{bcrypt}$2a$12$yWKWEtHWjtSS.yOvM85h.O0taPtjly3UpbxcUPd6ZtsnmubwqYpAG") //100
-//                        .roles("USER")
-//                        .build();
-//        UserDetails admin =
-//                User.builder()
-//                        .username("admin")
-//                        .password("{bcrypt}$2a$12$yWKWEtHWjtSS.yOvM85h.O0taPtjly3UpbxcUPd6ZtsnmubwqYpAG")
-//                        .roles("ADMIN", "USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
-
-//
-//
-//    //Кратко with jdbc
-//    @Bean
-//    public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
-//        return new JdbcUserDetailsManager(dataSource);
-//    }
-
-    //DAO authentication provider
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -102,7 +61,6 @@ public class SecurityConfig {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        // return PasswordEncoderFactories.createDelegatingPasswordEncoder();
         return new BCryptPasswordEncoder();
     }
 }

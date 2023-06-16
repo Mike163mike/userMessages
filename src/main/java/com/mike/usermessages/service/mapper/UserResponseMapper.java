@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface UserResponseMapper {
 
     UserResponseDto map(User user);

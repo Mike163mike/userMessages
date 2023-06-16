@@ -4,8 +4,9 @@ import com.mike.usermessages.model.User;
 import com.mike.usermessages.service.dto.UserRegRequestDto;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface UserRegRequestMapper {
+
     UserRegRequestDto map(User user);
 
     User map(UserRegRequestDto userRegRequestDto);

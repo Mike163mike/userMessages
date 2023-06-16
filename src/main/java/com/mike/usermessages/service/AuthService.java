@@ -1,10 +1,11 @@
 package com.mike.usermessages.service;
 
-import com.mike.usermessages.exception.AppError;
+import com.mike.usermessages.exception.AppException;
 import com.mike.usermessages.model.User;
 import com.mike.usermessages.service.dto.JwtResponseDto;
 import com.mike.usermessages.service.dto.UserRegRequestDto;
 import com.mike.usermessages.service.util.JwtTokenUtil;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class AuthService {
 
     private final JwtTokenUtil jwtTokenUtil;
@@ -21,22 +23,12 @@ public class AuthService {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthService(JwtTokenUtil jwtTokenUtil, SecurityUserService securityUserService, UserService userService,
-                       AuthenticationManager authenticationManager) {
-        this.jwtTokenUtil = jwtTokenUtil;
-        this.securityUserService = securityUserService;
-        this.userService = userService;
-        this.authenticationManager = authenticationManager;
-    }
-
-
     public ResponseEntity<?> createAuthToken(UserRegRequestDto userRegRequestDto) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userRegRequestDto.getUsername(),
                     userRegRequestDto.getPassword()));
         } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(),
-                    "Incorrect login or password."), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new AppException("Incorrect login or password."), HttpStatus.UNAUTHORIZED);
         }
         UserDetails userDetails = securityUserService.loadUserByUsername(userRegRequestDto.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
@@ -47,8 +39,7 @@ public class AuthService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(new AppError(HttpStatus.UNAUTHORIZED.value(),
-                    "Incorrect login or password."), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new AppException("Incorrect login or password."), HttpStatus.UNAUTHORIZED);
         }
         UserDetails userDetails = securityUserService.loadUserByUsername(username);
         String token = jwtTokenUtil.generateToken(userDetails);
@@ -57,8 +48,7 @@ public class AuthService {
 
     public ResponseEntity<?> createUser(UserRegRequestDto userRegRequestDto) {
         if (userService.getUserByUsername(userRegRequestDto.getUsername()) != null) {
-            return new ResponseEntity<>(new AppError(HttpStatus.BAD_REQUEST.value(), "User with this " +
-                    "username already exist"),
+            return new ResponseEntity<>(new AppException("User with this username already exist"),
                     HttpStatus.BAD_REQUEST);
         }
         User user = new User();
