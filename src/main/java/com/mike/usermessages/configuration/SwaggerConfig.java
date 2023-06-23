@@ -18,7 +18,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("userMessages Api")
+                        .title("User Messages Api")
                         .version("1.0.0")
                         .description("App for safe create, edit and delete messages.")
                         .contact(

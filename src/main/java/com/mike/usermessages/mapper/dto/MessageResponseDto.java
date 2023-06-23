@@ -1,4 +1,4 @@
-package com.mike.usermessages.service.dto;
+package com.mike.usermessages.mapper.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +13,5 @@ public class MessageResponseDto {
     private String message;
     private Instant createTime;
     private Instant editTime;
-    private Integer user_id;
+    private Integer userId;
 }

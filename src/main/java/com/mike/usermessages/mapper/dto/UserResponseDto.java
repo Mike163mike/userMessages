@@ -1,4 +1,4 @@
-package com.mike.usermessages.service.dto;
+package com.mike.usermessages.mapper.dto;
 
 import com.mike.usermessages.model.Message;
 import com.mike.usermessages.model.Role;

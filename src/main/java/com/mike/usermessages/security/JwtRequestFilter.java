@@ -1,6 +1,6 @@
 package com.mike.usermessages.security;
 
-import com.mike.usermessages.service.util.JwtTokenUtil;
+import com.mike.usermessages.util.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import jakarta.servlet.FilterChain;

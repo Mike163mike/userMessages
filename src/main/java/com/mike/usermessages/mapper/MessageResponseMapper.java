@@ -1,7 +1,7 @@
-package com.mike.usermessages.service.mapper;
+package com.mike.usermessages.mapper;
 
 import com.mike.usermessages.model.Message;
-import com.mike.usermessages.service.dto.MessageResponseDto;
+import com.mike.usermessages.mapper.dto.MessageResponseDto;
 import org.mapstruct.Mapper;
 
 import java.util.List;

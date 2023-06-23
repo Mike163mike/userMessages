@@ -2,8 +2,8 @@ package com.mike.usermessages.controller;
 
 import com.mike.usermessages.exception.AppException;
 import com.mike.usermessages.service.UserService;
-import com.mike.usermessages.service.dto.UserResponseDto;
-import com.mike.usermessages.service.mapper.UserResponseMapper;
+import com.mike.usermessages.mapper.dto.UserResponseDto;
+import com.mike.usermessages.mapper.UserResponseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

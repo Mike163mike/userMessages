@@ -1,7 +1,7 @@
-package com.mike.usermessages.service.mapper;
+package com.mike.usermessages.mapper;
 
 import com.mike.usermessages.model.User;
-import com.mike.usermessages.service.dto.UserRegRequestDto;
+import com.mike.usermessages.mapper.dto.UserRegRequestDto;
 import org.mapstruct.Mapper;
 
 @Mapper

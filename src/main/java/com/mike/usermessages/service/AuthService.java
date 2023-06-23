@@ -2,9 +2,9 @@ package com.mike.usermessages.service;
 
 import com.mike.usermessages.exception.AppException;
 import com.mike.usermessages.model.User;
-import com.mike.usermessages.service.dto.JwtResponseDto;
-import com.mike.usermessages.service.dto.UserRegRequestDto;
-import com.mike.usermessages.service.util.JwtTokenUtil;
+import com.mike.usermessages.mapper.dto.JwtResponseDto;
+import com.mike.usermessages.mapper.dto.UserRegRequestDto;
+import com.mike.usermessages.util.JwtTokenUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

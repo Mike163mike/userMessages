@@ -1,10 +1,10 @@
 package com.mike.usermessages.controller;
 
 import com.mike.usermessages.service.MessageService;
-import com.mike.usermessages.service.dto.MessageRequestDto;
-import com.mike.usermessages.service.dto.MessageResponseDto;
-import com.mike.usermessages.service.mapper.MessageRequestMapper;
-import com.mike.usermessages.service.mapper.MessageResponseMapper;
+import com.mike.usermessages.mapper.dto.MessageRequestDto;
+import com.mike.usermessages.mapper.dto.MessageResponseDto;
+import com.mike.usermessages.mapper.MessageRequestMapper;
+import com.mike.usermessages.mapper.MessageResponseMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

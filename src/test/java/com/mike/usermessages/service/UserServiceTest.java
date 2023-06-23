@@ -1,27 +1,19 @@
 package com.mike.usermessages.service;
 
+import com.mike.usermessages.AbstractTest;
 import com.mike.usermessages.model.Role;
 import com.mike.usermessages.model.User;
-import com.mike.usermessages.repository.RoleRepository;
-import com.mike.usermessages.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.List;
 
-@ExtendWith(MockitoExtension.class)
-class UserServiceTest {
-    @Mock
-    private UserRepository userRepository;
-    @Mock
-    private RoleRepository roleRepository;
-    @InjectMocks
+class UserServiceTest extends AbstractTest {
+
+    @Autowired
     private UserService userService;
 
     public User getUser() {
@@ -45,17 +37,16 @@ class UserServiceTest {
     void editUserRoles() {
         User user = new User();
         Role roleU = new Role();
-        roleU.setName("USER");
+        roleU.setName("ROLE_USER");
         user.setRoles(List.of(roleU));
         user.setUsername("User");
-        Mockito.when(userRepository.findUserByUsername("User")).thenReturn(getUser());
-        Mockito.when(roleRepository.findAll()).thenReturn(getRole());
-        user = userService.editUserRoles("User", List.of("ADMIN"));
+        userRepository.save(user);
+        user = userService.editUserRoles("User", List.of("ROLE_ADMIN"));
         String newRole = user.getRoles().stream()
-                .map(Role::getName)
-                .findFirst()
-                .orElseThrow();
-        Assertions.assertArrayEquals("ADMIN".toCharArray(), newRole.toCharArray());
+            .map(Role::getName)
+            .findFirst()
+            .orElseThrow();
+        Assertions.assertArrayEquals("ROLE_ADMIN".toCharArray(), newRole.toCharArray());
     }
 
     @Test
@@ -69,7 +60,7 @@ class UserServiceTest {
         List<Role> results = userService.mapStringToRole(stringList);
         Role[] rolesArray = results.toArray(new Role[0]);
         String[] rolesAsString = Arrays.stream(rolesArray)
-                .map(Role::getName).toArray(String[]::new);
+            .map(Role::getName).toArray(String[]::new);
         Assertions.assertArrayEquals(strings, rolesAsString);
     }
 }

@@ -1,7 +1,7 @@
 package com.mike.usermessages.controller;
 
 import com.mike.usermessages.service.AuthService;
-import com.mike.usermessages.service.dto.UserRegRequestDto;
+import com.mike.usermessages.mapper.dto.UserRegRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;

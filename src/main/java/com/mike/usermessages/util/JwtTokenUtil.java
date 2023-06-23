@@ -1,4 +1,4 @@
-package com.mike.usermessages.service.util;
+package com.mike.usermessages.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

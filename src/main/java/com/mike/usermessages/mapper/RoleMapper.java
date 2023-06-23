@@ -1,7 +1,7 @@
-package com.mike.usermessages.service.mapper;
+package com.mike.usermessages.mapper;
 
 import com.mike.usermessages.model.Role;
-import com.mike.usermessages.service.dto.RoleDto;
+import com.mike.usermessages.mapper.dto.RoleDto;
 import org.mapstruct.Mapper;
 
 @Mapper
