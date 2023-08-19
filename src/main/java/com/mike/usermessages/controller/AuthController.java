@@ -26,7 +26,8 @@ public class AuthController {
 
     @Operation(summary = "Receiving jwt by registered users. FOR TESTING ONLY!!!!")
     @PostMapping("/getJwt")
-    public ResponseEntity<?> getJwt(@RequestParam String username, @RequestParam String password) {
-        return authService.createAuthToken(username, password);
+    public ResponseEntity<?> getJwt(@RequestBody UserRegRequestDto userRegRequestDto) {
+        return authService.createAuthToken(userRegRequestDto.getUsername(),
+                userRegRequestDto.getPassword());
     }
 }

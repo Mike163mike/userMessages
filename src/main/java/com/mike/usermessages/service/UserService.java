@@ -40,7 +40,8 @@ public class UserService {
             throw new AppException("Incorrect name of role.");
         }
         user.setEditTime(Instant.now());
-        return userRepository.save(user);
+        userRepository.save(user);    //These two steps do-
+        return user;                  // only for normal running test cases.
     }
 
     public List<User> getAllUsers() {

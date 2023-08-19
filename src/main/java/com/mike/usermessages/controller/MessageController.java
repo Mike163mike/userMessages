@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 @Tag(name = "Messages", description = "The Message API. Contains operations with " +
         "messages.")
 @AllArgsConstructor
-public class MessageController {
+public class    MessageController {
 
     private final MessageService messageService;
     private final MessageResponseMapper messageResponseMapper;

@@ -5,7 +5,6 @@ import com.mike.usermessages.model.Role;
 import com.mike.usermessages.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -15,23 +14,6 @@ class UserServiceTest extends AbstractTest {
 
     @Autowired
     private UserService userService;
-
-    public User getUser() {
-        User user = new User();
-        user.setUsername("User");
-        Role roleU = new Role();
-        roleU.setName("USER");
-        user.setRoles(List.of(roleU));
-        return user;
-    }
-
-    private List<Role> getRole() {
-        Role roleU = new Role();
-        Role roleA = new Role();
-        roleU.setName("USER");
-        roleU.setName("ADMIN");
-        return List.of(roleU, roleA);
-    }
 
     @Test
     void editUserRoles() {
